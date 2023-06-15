@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+{% endblock %}
+{% block content %}
+
+
+  <div class="container">
+    {% if articles %}
+    {% if q %}
+    <h3>Related to {{q}}</h3>
+    {% else %}
+    <h3>Latest Post</h3>
+    {% endif %}
+    <ul class="list-group list-group-horizontal-xxl">
+      {% for a in articles %}
+      <li class="card my-2">
+
+  {% if a.image %}
+      <p><img class="img-article" src="{{a.image.url }}"></p>
+  {% endif %}
+        <div class="card-header">
+          {{a.title}}
+        </div>
+        <div class="card-body">
+          {% autoescape on %}
+          <h5 class="card-title">{{a.body | linebreaks | truncatewords:50 }}</h5>
+          {% endautoescape %}
+
+          <a href={{a.url_name}}>{{a.url_name}}</a>
+          <br>
+          <a style="float: right;" class="btn btn-success" href="{{a.get_absolute_url}}">Read more</a>
+          <p style="float: left;" class="text-muted">{{a.create}}</p>
+          <br><br>
+          <div style="clear:both;"></div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <center>There is no posts</center>
+    {% endif %}
+  </div>
+
+{% endblock %}
